@@ -72,3 +72,20 @@ const menu = [
     desc: `skateboard fam synth authentic semiotics. Live-edge lyft af, edison bulb yuccie crucifix microdosing.`,
   },
 ];
+
+// const price = document.querySelector('.price');
+// const img = document.querySelector('.photo');
+// const menuItem = document.querySelector('.menu-item');
+// const text = document.querySelector('.item-text');
+
+const section = document.querySelector('.section-center');
+
+function showMenu(){
+let displayMenu = menu.map(function(item){
+  console.log(item);
+
+});
+
+};
+
+window.addEventListener('DOMContentLoaded', showMenu)
