@@ -83,6 +83,7 @@ const menu = [
 
 
 const section = document.querySelector('.section-center');
+const container = document.querySelector('.btn-container');
 
 function showMenu(menuItems){
 let displayMenu = menuItems.map(function(item){
@@ -104,37 +105,52 @@ displayMenu = displayMenu.join('');
 section.innerHTML = displayMenu
 };
 
-const filterBtn = document.querySelectorAll('.filter-btn')
 
 
-filterBtn.forEach(function(btn) {
-  btn.addEventListener('click', function(e){
-    let category = e.currentTarget.dataset.id
-    const menuCategory = menu.filter(function(menuItem) {
-if(menuItem.category === category){
-      return menuItem
-}
+function displayMenuButtons() {
+  //values references ["all"] array returning item references all items in category ALWAYS ALWAYS RETURN THE VALUES!!
+  const categories = menu.reduce(
+    function (values, item) {
+      //if values does NOT return all array then return that category t
+      if (!values.includes(item.category)) {
+        values.push(item.category);
+      }
+      //then just skip
+      return values;
+    },
+    ['all']
+  );
+
+  const categoryBtns = categories
+    .map(function (category) {
+      return `<button class="filter-btn" type="button" data-id=${category}>${category}</button>`;
     })
-if(category === 'all') {
-  showMenu(menu)
-}  else {
-  showMenu(menuCategory)
-}
-});
+    .join('');
+  container.innerHTML = categoryBtns;
 
-});
+  //if you add dynamcially you can only access onces its added to the DOM NOT before!!
+
+  const filterBtn = document.querySelectorAll('.filter-btn');
+  filterBtn.forEach(function (btn) {
+    btn.addEventListener('click', function (e) {
+      let category = e.currentTarget.dataset.id;
+      const menuCategory = menu.filter(function (menuItem) {
+        if (menuItem.category === category) {
+          return menuItem;
+        }
+      });
+      if (category === 'all') {
+        showMenu(menu);
+      } else {
+        showMenu(menuCategory);
+      }
+    });
+  });
+}
 
 window.addEventListener('DOMContentLoaded',function(){
 showMenu(menu);
-//values references ["all"] array returning item references all items in category ALWAYS ALWAYS RETURN THE VALUES!!
-const categories = menu.reduce(function(values, item){
-//if values does NOT return all array then return that category t
-  if(!values.includes(item.category)){
-    values.push(item.category)
-  }
-  //then just skip
-return values
-},['all'])
-console.log(categories);
+displayMenuButtons()
+
 });
 
