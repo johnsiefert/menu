@@ -73,10 +73,6 @@ const menu = [
   },
 ];
 
-// const price = document.querySelector('.price');
-// const img = document.querySelector('.photo');
-// const menuItem = document.querySelector('.menu-item');
-// const text = document.querySelector('.item-text');
 
 const section = document.querySelector('.section-center');
 
@@ -100,7 +96,26 @@ displayMenu = displayMenu.join('');
 section.innerHTML = displayMenu
 };
 
+const filterBtn = document.querySelectorAll('.filter-btn')
 
+//filter over each catergory of the array. check for categories and return that cat to the correct button
+
+filterBtn.forEach(function(btn) {
+  btn.addEventListener('click', function(e){
+    let category = e.currentTarget.dataset.id
+    const menuCategory = menu.filter(function(menuItem) {
+if(menuItem.category === category){
+      return menuItem
+}
+    })
+if(category === 'all') {
+  showMenu(menu)
+}  else {
+  showMenu(menuCategory)
+}
+});
+
+});
 
 window.addEventListener('DOMContentLoaded',function(){
 showMenu(menu);
